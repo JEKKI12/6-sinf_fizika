@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>6-sinf Fizika — 1-mavzu</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#172033}
+.app{max-width:1200px;margin:auto;min-height:100vh;background:white;box-shadow:0 0 30px #0001}
+header{padding:18px 24px;border-bottom:1px solid #dde3ec;display:flex;justify-content:space-between;align-items:center}
+h1{font-size:22px;margin:0}.sub{color:#667085;font-size:14px}
+nav{display:flex;gap:8px;padding:12px 18px;overflow:auto;border-bottom:1px solid #dde3ec}
+nav button{white-space:nowrap;border:0;border-radius:12px;padding:10px 13px;background:#edf1f7;cursor:pointer;font-weight:700}
+nav button.active{background:#263b80;color:white}
+main{padding:22px}.scene{display:none}.scene.active{display:block}
+.title{display:flex;justify-content:space-between;align-items:end;margin-bottom:15px}.title h2{margin:0;font-size:25px}.badge{padding:6px 10px;border-radius:10px;background:#eef2ff}
+.stage{position:relative;height:390px;border:1px solid #dbe2ec;border-radius:20px;background:linear-gradient(#eaf5ff,#fff);overflow:hidden}
+.controls{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}.controls button{border:0;border-radius:11px;padding:11px 15px;background:#263b80;color:#fff;font-weight:700;cursor:pointer}.controls button.alt{background:#e9edf5;color:#172033}
+.info{margin-top:14px;padding:15px;border-radius:14px;background:#f5f7fa;line-height:1.45}.question{margin-top:14px;padding:15px;border-radius:14px;background:#fff7df;border:1px solid #f1df9d}
+.choice{display:inline-block;margin:6px 6px 0 0;padding:10px 13px;border:1px solid #ccd4df;background:white;border-radius:10px;cursor:pointer}
+.feedback{font-weight:700;margin-top:8px;min-height:20px}
+.glass{position:absolute;left:42%;bottom:70px;width:170px;height:210px;border:5px solid #78a9cf;border-top:0;border-radius:0 0 35px 35px;background:linear-gradient(#bfe8ff99,#7dcfff99);overflow:hidden}
+.water{position:absolute;bottom:0;width:100%;height:72%;background:#78c9f066}.bubble{position:absolute;width:12px;height:12px;border-radius:50%;background:#377dff88;animation:float 2.5s infinite ease-in-out}
+@keyframes float{50%{transform:translateY(-90px) translateX(20px)}}
+.zoom{position:absolute;right:30px;top:30px;padding:12px 15px;border-radius:12px;background:#263b80;color:white;font-weight:bold;cursor:pointer}
+.particle{position:absolute;width:12px;height:12px;border-radius:50%;background:#3976d8}
+.road{position:absolute;left:0;right:0;bottom:55px;height:90px;background:#454b55}.lane{position:absolute;left:0;right:0;top:42px;border-top:5px dashed #fff8}
+.car{position:absolute;bottom:78px;left:50px;font-size:55px;transition:left 2s linear}
+.marker{position:absolute;bottom:145px;left:45px;font-size:13px}.finish{position:absolute;right:40px;bottom:145px;font-weight:bold}
+.battery,.bulb,.switch{position:absolute;font-size:55px}.battery{left:100px;top:155px}.bulb{right:130px;top:145px}.switch{left:48%;top:165px;font-size:45px;cursor:pointer}
+.wire{position:absolute;background:#555;height:6px}.w1{left:155px;top:180px;width:250px}.w2{left:150px;top:280px;width:300px}.w3{left:120px;top:180px;width:6px;height:105px}.w4{right:115px;top:180px;width:6px;height:105px}
+.heatpot{position:absolute;left:38%;bottom:65px;width:260px;height:150px;border:6px solid #667085;border-top:0;border-radius:0 0 35px 35px;background:#7dcfff88}.thermo{position:absolute;right:18%;bottom:75px;width:25px;height:210px;border:3px solid #555;border-radius:15px}.mercury{position:absolute;bottom:0;left:7px;width:5px;height:45%;background:#e44;border-radius:5px}.temp{position:absolute;right:13%;top:70px;font-size:28px;font-weight:bold}.flame{position:absolute;left:47%;bottom:20px;font-size:65px}
+.room{position:absolute;inset:0;background:#1b2230}.room.on{background:#edf5ff}.table{position:absolute;left:20%;bottom:50px;width:60%;height:20px;background:#7c5b43}.book{position:absolute;left:48%;bottom:70px;font-size:55px}.lamp{position:absolute;left:48%;top:45px;font-size:55px;cursor:pointer}.ray{position:absolute;left:50%;top:90px;width:4px;height:220px;background:#ffe36e;transform-origin:top;opacity:0;filter:drop-shadow(0 0 7px #ffe36e)}.room.on .ray{opacity:.8}.eye{position:absolute;right:13%;bottom:75px;font-size:50px}
+.guitar{position:absolute;left:40%;top:70px;font-size:170px}.wave{position:absolute;left:34%;top:205px;width:400px;height:80px;border-top:4px solid #7c4dff;animation:wave 1s infinite linear}.wave:after{content:"";display:block;width:100%;height:100%;border-top:4px solid #7c4dff;transform:translateY(18px)}@keyframes wave{to{transform:translateX(40px)}}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.card{padding:18px;border-radius:18px;background:#f4f6fa;text-align:center;font-size:34px;cursor:pointer}.card b{display:block;font-size:16px;margin-top:8px}
+@media(max-width:700px){.stage{height:330px}.cards{grid-template-columns:1fr 1fr}.glass{left:30%}.battery{left:40px}.bulb{right:40px}.w1{left:95px;width:160px}.w2{left:80px;width:210px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div><h1>6-sinf Fizika</h1><div class="sub">1-mavzu: Fizika nimani o‘rganadi? Fizik hodisalar</div></div><div>🔬 INTERAKTIV MODUL</div></header>
+<nav id="nav"></nav>
+<main>
+<section class="scene active" id="s1">
+<div class="title"><h2>🔬 Modda tuzilishi</h2><span class="badge">1 / 6</span></div>
+<div class="stage" id="matterStage"><div class="glass"><div class="water"></div></div><button class="zoom" onclick="zoomMatter()">🔍 Kattalashtirish</button></div>
+<div class="controls"><button onclick="zoomMatter()">▶ Boshlash</button><button class="alt" onclick="resetMatter()">↻ Qayta boshlash</button></div>
+<div class="info" id="matterInfo">Oddiy suv stakanini kuzating. “Kattalashtirish” tugmasini bosib, ta’limiy modelga o‘ting.</div>
+<div class="question"><b>Nimani kuzatyapsiz?</b><br>
+<span class="choice" onclick="ans(this,true,'To‘g‘ri! Moddalarni juda kichik zarralardan tashkil topgan deb tasavvur qilamiz.')">A) Juda kichik zarralar modelini</span>
+<span class="choice" onclick="ans(this,false,'Qayta o‘ylab ko‘ring.')">B) Suvning ichida katta jismlarni</span><div class="feedback"></div></div>
+</section>
+
+<section class="scene" id="s2">
+<div class="title"><h2>🔵 Mexanik hodisa</h2><span class="badge">2 / 6</span></div>
+<div class="stage"><div class="road"><div class="lane"></div></div><div class="car" id="car">🚗</div><div class="marker">START</div><div class="finish">FINISH</div></div>
+<div class="controls"><button onclick="startCar()">▶ Boshlash</button><button class="alt" onclick="stopCar()">Ⅱ To‘xtatish</button><button class="alt" onclick="resetCar()">↻ Qayta boshlash</button></div>
+<div class="info">Avtomobilning yo‘nalishi va bosib o‘tgan yo‘lini kuzating. <b>Jismlarning harakati bilan bog‘liq hodisalar mexanik hodisalardir.</b></div>
+<div class="question"><b>Qaysi biri mexanik hodisa?</b><br><span class="choice" onclick="ans(this,true,'To‘g‘ri! Avtomobilning harakati kuzatilmoqda.')">🚗 Avtomobilning harakatlanishi</span><span class="choice" onclick="ans(this,false,'Bu boshqa turdagi fizik hodisa.')">💡 Lampochkaning yonishi</span><div class="feedback"></div></div>
+</section>
+
+<section class="scene" id="s3">
+<div class="title"><h2>🟡 Elektr hodisasi</h2><span class="badge">3 / 6</span></div>
+<div class="stage">
+<div class="battery">🔋</div><div class="bulb" id="bulb">💡</div><div class="switch" id="sw" onclick="toggleCircuit()">🔴</div>
+<div class="wire w1"></div><div class="wire w2"></div><div class="wire w3"></div><div class="wire w4"></div>
+</div>
+<div class="controls"><button onclick="toggleCircuit()">🔘 Kalitni ochish/yopish</button><button class="alt" onclick="resetCircuit()">↻ Qayta boshlash</button></div>
+<div class="info" id="elecInfo">Boshlang‘ich holat: kalit ochiq, lampochka o‘chiq. Kalitni yoping va o‘zgarishni kuzating.</div>
+<div class="question"><b>Kalit ochiq bo‘lsa, nima uchun lampochka yonmaydi?</b><br><span class="choice" onclick="ans(this,true,'To‘g‘ri! Elektr zanjiri uzilgan.')">Zanjir uzilgan</span><span class="choice" onclick="ans(this,false,'Qayta o‘ylab ko‘ring.')">Lampochka juda kichik</span><div class="feedback"></div></div>
+</section>
+
+<section class="scene" id="s4">
+<div class="title"><h2>🟠 Issiqlik hodisasi</h2><span class="badge">4 / 6</span></div>
+<div class="stage"><div class="heatpot"><div id="heatWater"></div></div><div class="flame">🔥</div><div class="thermo"><div class="mercury" id="mercury"></div></div><div class="temp" id="temp">20 °C</div></div>
+<div class="controls"><button onclick="heat()">🔥 Isitkichni yoqish</button><button class="alt" onclick="resetHeat()">↻ Qayta boshlash</button></div>
+<div class="info" id="heatInfo">Boshlang‘ich temperatura: 20 °C. Isitkichni yoqing va suvning qizishini kuzating.</div>
+<div class="question"><b>Muzqaymoqning erishi qaysi hodisa?</b><br><span class="choice" onclick="ans(this,true,'To‘g‘ri! Erish — issiqlik hodisasiga misol.')">🟠 Issiqlik</span><span class="choice" onclick="ans(this,false,'Qayta o‘ylab ko‘ring.')">🔵 Mexanik</span><div class="feedback"></div></div>
+</section>
+
+<section class="scene" id="s5">
+<div class="title"><h2>🟢 Yorug‘lik hodisasi</h2><span class="badge">5 / 6</span></div>
+<div class="stage"><div class="room" id="room"><div class="lamp" onclick="toggleLight()">💡</div><div class="table"></div><div class="book">📖</div><div class="ray"></div><div class="eye">👁️</div></div></div>
+<div class="controls"><button onclick="toggleLight()">💡 Chiroqni yoqish/o‘chirish</button><button class="alt" onclick="resetLight()">↻ Qayta boshlash</button></div>
+<div class="info" id="lightInfo">Qorong‘i xonada kitobni ko‘rish qiyin. Chiroqni yoqing va yorug‘likning tarqalishini kuzating.</div>
+<div class="question"><b>Qaysi biri yorug‘lik hodisasiga misol?</b><br><span class="choice" onclick="ans(this,true,'To‘g‘ri! Kamalak yorug‘lik hodisasiga misol.')">🌈 Kamalakning paydo bo‘lishi</span><span class="choice" onclick="ans(this,false,'Qayta o‘ylab ko‘ring.')">🪨 Toshning tushishi</span><div class="feedback"></div></div>
+</section>
+
+<section class="scene" id="s6">
+<div class="title"><h2>🟣 Tovush hodisasi</h2><span class="badge">6 / 6</span></div>
+<div class="stage"><div class="guitar">🎸</div><div class="wave" id="wave"></div><div style="position:absolute;right:12%;top:155px;font-size:65px">👂</div></div>
+<div class="controls"><button onclick="toggleSound()">▶ Torni tebratish</button><button class="alt" onclick="resetSound()">↻ Qayta boshlash</button></div>
+<div class="info" id="soundInfo">Tor tebranganda tovush hosil bo‘ladi. To‘lqin modeli havodagi tebranishning uzatilishini sodda ko‘rsatadi.</div>
+<div class="question"><b>Tovush manbai bilan nima sodir bo‘lmoqda?</b><br><span class="choice" onclick="ans(this,true,'To‘g‘ri! Tovush manbai tebranmoqda.')">Tebranmoqda</span><span class="choice" onclick="ans(this,false,'Qayta o‘ylab ko‘ring.')">Joyida butunlay qotib turibdi</span><div class="feedback"></div></div>
+</section>
+
+<section class="scene" id="game">
+<div class="title"><h2>🎮 Fizik hodisani top!</h2><span class="badge">Mini-o‘yin</span></div>
+<div class="stage" style="height:250px;display:flex;flex-direction:column;justify-content:center;align-items:center">
+<div id="gameIcon" style="font-size:75px">🚗</div><div id="gameText" style="font-size:22px;font-weight:bold">Avtomobil harakatlanmoqda</div>
+</div>
+<div class="cards" style="margin-top:15px">
+<div class="card" onclick="gameAns('Mexanik')">🔵<b>Mexanik</b></div><div class="card" onclick="gameAns('Issiqlik')">🟠<b>Issiqlik</b></div>
+<div class="card" onclick="gameAns('Elektr')">🟡<b>Elektr</b></div><div class="card" onclick="gameAns('Yorug‘lik')">🟢<b>Yorug‘lik</b></div>
+<div class="card" onclick="gameAns('Tovush')">🟣<b>Tovush</b></div>
+</div>
+<div class="feedback" id="gameFeedback"></div>
+</section>
+</main>
+</div>
+<script>
+const scenes=['s1','s2','s3','s4','s5','s6','game'];
+const names=['🔬 Modda','🔵 Mexanik','🟡 Elektr','🟠 Issiqlik','🟢 Yorug‘lik','🟣 Tovush','🎮 O‘yin'];
+document.getElementById('nav').innerHTML=names.map((n,i)=>`<button onclick="show('${scenes[i]}')">${n}</button>`).join('');
+function show(id){document.querySelectorAll('.scene').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('nav button').forEach((b,i)=>b.classList.toggle('active',scenes[i]===id));}
+show('s1');
+
+function ans(el,ok,msg){let f=el.parentElement.querySelector('.feedback');f.textContent=(ok?'✅ ':'🔄 ')+msg}
+let zoomed=false;
+function zoomMatter(){if(zoomed)return;zoomed=true;let st=document.getElementById('matterStage');for(let i=0;i<45;i++){let p=document.createElement('div');p.className='particle';p.style.left=(35+Math.random()*35)+'%';p.style.top=(20+Math.random()*55)+'%';p.style.animation=`float ${1.2+Math.random()*2}s infinite ease-in-out`;st.appendChild(p)}document.getElementById('matterInfo').innerHTML='<b>Moddalar juda kichik zarralardan tashkil topgan.</b><br>Zarralar doimo harakatda bo‘ladi. Bu — ta’limiy model.'}
+function resetMatter(){zoomed=false;document.querySelectorAll('#matterStage .particle').forEach(p=>p.remove());document.getElementById('matterInfo').textContent='Oddiy suv stakanini kuzating. “Kattalashtirish” tugmasini bosib, ta’limiy modelga o‘ting.'}
+
+let carTimer;function startCar(){let c=document.getElementById('car');c.style.transition='left 3s linear';c.style.left='80%';clearTimeout(carTimer);carTimer=setTimeout(()=>{},3000)}
+function stopCar(){let c=document.getElementById('car');let x=getComputedStyle(c).left;c.style.transition='none';c.style.left=x}
+function resetCar(){clearTimeout(carTimer);let c=document.getElementById('car');c.style.transition='none';c.style.left='50px'}
+
+let circuit=false;function toggleCircuit(){circuit=!circuit;document.getElementById('bulb').textContent=circuit?'💡':'⚫';document.getElementById('sw').textContent=circuit?'🟢':'🔴';document.getElementById('elecInfo').innerHTML=circuit?'<b>Zanjir yopildi.</b> Lampochka yondi.':'<b>Zanjir ochiq.</b> Lampochka o‘chiq.'}
+function resetCircuit(){circuit=false;toggleCircuit();toggleCircuit()}
+
+let heatTimer;function heat(){clearInterval(heatTimer);let t=20;heatTimer=setInterval(()=>{t+=5;document.getElementById('temp').textContent=t+' °C';document.getElementById('mercury').style.height=Math.min(90,(t-20)*1.2+20)+'%';if(t>=70){clearInterval(heatTimer);document.getElementById('heatInfo').innerHTML='<b>Suv qizidi.</b> Qizdirish davom etsa, bug‘lanish kuzatilishi mumkin.'}},400)}
+function resetHeat(){clearInterval(heatTimer);document.getElementById('temp').textContent='20 °C';document.getElementById('mercury').style.height='45%';document.getElementById('heatInfo').textContent='Boshlang‘ich temperatura: 20 °C. Isitkichni yoqing va suvning qizishini kuzating.'}
+
+let light=false;function toggleLight(){light=!light;document.getElementById('room').classList.toggle('on',light);document.getElementById('lightInfo').innerHTML=light?'<b>Chiroq yondi.</b> Yorug‘lik manbadan tarqalib, jismlarga tushadi.':'Xona qorong‘i. Chiroqni yoqib, o‘zgarishni kuzating.'}
+function resetLight(){light=true;toggleLight();light=false;toggleLight()}
+
+let sound=false;function toggleSound(){sound=!sound;document.getElementById('wave').style.animationDuration=sound?'0.5s':'1s';document.getElementById('soundInfo').innerHTML=sound?'<b>Tor tebranmoqda.</b> Tovush manbaining tebranishi natijasida tovush hosil bo‘ladi.':'Torni tebrating va tebranishni kuzating.'}
+function resetSound(){sound=false;toggleSound();toggleSound()}
+
+const qs=[
+['🚗','Avtomobil harakatlanmoqda','Mexanik'],['🧊','Muz erimoqda','Issiqlik'],['💡','Lampochka yonmoqda','Elektr'],
+['🌈','Kamalak paydo bo‘lmoqda','Yorug‘lik'],['🎸','Gitara tori tebranmoqda','Tovush'],['💧','Suv bug‘lanmoqda','Issiqlik'],['🪨','Tosh tushmoqda','Mexanik']];
+let qi=0,score=0;
+function gameAns(a){let q=qs[qi],f=document.getElementById('gameFeedback');if(a===q[2]){score++;f.textContent='✅ To‘g‘ri!';}else f.textContent='🔄 Qayta o‘ylab ko‘ring.';setTimeout(()=>{qi++;if(qi<qs.length){document.getElementById('gameIcon').textContent=qs[qi][0];document.getElementById('gameText').textContent=qs[qi][1];f.textContent=''}else{document.getElementById('gameText').textContent='Natija: '+score+' / '+qs.length;document.getElementById('gameIcon').textContent='🏆';f.textContent='🎉 Dars yakunlandi!';qi=0;score=0}},650)}
+</script>
+</body>
+</html>
